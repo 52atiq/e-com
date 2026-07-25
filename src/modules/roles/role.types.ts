@@ -11,3 +11,13 @@ export interface IRole {
   createdAt?: Date;
   updatedAt?: Date;
 }
+
+export interface ICreateRole {
+  name: RoleName;
+  description?: string;
+}
+
+export interface IUpdateRole {
+  name?: RoleName;
+  description?: string;
+}
