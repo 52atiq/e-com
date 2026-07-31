@@ -1,14 +1,16 @@
-import { CreationAttributes } from "sequelize";
-import Role from "./role.model";
+import httpStatus from "http-status";
 import roleRepository from "./role.repository";
-import { ICreateRole, IRole, IUpdateRole, RoleName } from "./role.types";
+import { ICreateRole, IUpdateRole } from "./role.types";
+import ApiError from "../../shared/errors/ApiError";
 
 class RoleService {
   async createRole(payload: ICreateRole) {
     const exists = await roleRepository.findByName(payload.name);
 
     if (exists) {
-      throw new Error("Role already exists");
+      // throw new Error("Role already exists");
+      throw new ApiError(httpStatus.BAD_REQUEST, "Role already exists");
+
     }
 
     return await roleRepository.create(payload);

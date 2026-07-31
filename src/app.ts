@@ -4,7 +4,8 @@ import helmet from "helmet";
 
 import router from "./routes";
 import notFound from "./middlewares/notFound.middleware";
-import globalErrorHandler from "./middlewares/error.middleware";
+import globalErrorHandler from "./middlewares/globalErrorHandler";
+// import globalErrorHandler from "./middlewares/error.middleware";
 
 const app = express();
 
@@ -22,5 +23,7 @@ app.use(notFound);
 
 // সবশেষে
 app.use(globalErrorHandler);
+// Global Error Handler
+// app.use(globalErrorHandler);
 
 export default app;
