@@ -2,8 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { env } from "../config/env";
 
-const auth =
-  (...roles: string[]) =>
+const auth = (...roles: string[]) =>
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const token = req.headers.authorization;
