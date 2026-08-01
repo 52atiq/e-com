@@ -1,28 +1,39 @@
 import { NextFunction, Request, Response } from "express";
-import jwt from "jsonwebtoken";
+import httpStatus from "http-status";
+
+import ApiError from "../shared/errors/ApiError";
+
 import { env } from "../config/env";
+import { verifyToken } from "../shared/utils/jwt";
 
-const auth = (...roles: string[]) =>
-  async (req: Request, res: Response, next: NextFunction) => {
+declare global {
+  namespace Express {
+    interface Request {
+      user?: any;
+    }
+  }
+}
+
+const auth =
+  (...roles: string[]) =>
+  async (req: Request, _res: Response, next: NextFunction) => {
     try {
-      const token = req.headers.authorization;
+      const authorization = req.headers.authorization;
 
-      if (!token) {
-        return res.status(401).json({
-          success: false,
-          message: "Unauthorized",
-        });
+      if (!authorization) {
+        throw new ApiError(httpStatus.UNAUTHORIZED, "Unauthorized access");
       }
 
-      const decoded = jwt.verify(token, env.jwtAccessSecret) as any;
+      const token = authorization.startsWith("Bearer ")
+        ? authorization.split(" ")[1]
+        : authorization;
+
+      const decoded = verifyToken(token, env.jwtAccessSecret);
 
       req.user = decoded;
 
-      if (roles.length && !roles.includes(decoded.role)) {
-        return res.status(403).json({
-          success: false,
-          message: "Forbidden",
-        });
+      if (roles.length && !roles.includes(decoded.role as string)) {
+        throw new ApiError(httpStatus.FORBIDDEN, "Forbidden");
       }
 
       next();
@@ -32,3 +43,4 @@ const auth = (...roles: string[]) =>
   };
 
 export default auth;
+

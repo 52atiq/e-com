@@ -10,34 +10,34 @@ export enum UserStatus {
   BLOCKED = "BLOCKED",
 }
 
-export interface IUser {
-  id: string;
+// export interface IUser {
+//   id: string;
 
-  roleId: string;
+//   roleId: string;
 
-  firstName: string;
+//   firstName: string;
 
-  lastName: string;
+//   lastName: string;
 
-  email: string;
+//   email: string;
 
-  phone?: string;
+//   phone?: string;
 
-  password: string;
+//   password: string;
 
-  avatar?: string;
+//   avatar?: string;
 
-  gender?: Gender;
+//   gender?: Gender;
 
-  status: UserStatus;
+//   status: UserStatus;
 
-  isVerified: boolean;
+//   isVerified: boolean;
 
-  lastLogin?: Date;
+//   lastLogin?: Date;
 
-  createdAt?: Date;
+//   createdAt?: Date;
 
-  updatedAt?: Date;
+//   updatedAt?: Date;
 
-  deletedAt?: Date;
-}
+//   deletedAt?: Date;
+// }

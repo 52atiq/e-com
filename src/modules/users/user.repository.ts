@@ -1,6 +1,7 @@
 import { CreationAttributes } from "sequelize";
 
 import User from "./user.model";
+import Role from "../roles/role.model";
 
 class UserRepository {
   async create(payload: CreationAttributes<User>) {
@@ -17,9 +18,23 @@ class UserRepository {
     return await User.findByPk(id);
   }
 
-  async findByEmail(email: string) {
-    return await User.findOne({
-      where: { email },
+  // async findByEmail(email: string) {
+  //   return await User.findOne({
+  //     where: { email },
+  //   });
+  // }
+
+  findByEmail(email: string) {
+    return User.findOne({
+      where: {
+        email,
+      },
+      include: [
+        {
+          model: Role,
+          as: "role",
+        },
+      ],
     });
   }
 
@@ -39,6 +54,49 @@ class UserRepository {
     await user.destroy();
 
     return user;
+  }
+
+  //  ###################################
+
+  async updatePassword(id: string, password: string) {
+    const user = await User.findByPk(id);
+
+    if (!user) return null;
+
+    return await user.update({
+      password,
+    });
+  }
+
+  async updateLastLogin(id: string) {
+    const user = await User.findByPk(id);
+
+    if (!user) return null;
+
+    return await user.update({
+      lastLogin: new Date(),
+    });
+  }
+
+  async verifyUser(id: string) {
+    const user = await User.findByPk(id);
+
+    if (!user) return null;
+
+    return await user.update({
+      isVerified: true,
+    });
+  }
+
+  async findByEmailWithPassword(email: string) {
+    return await User.findOne({
+      where: {
+        email,
+      },
+      attributes: {
+        include: ["password"],
+      },
+    });
   }
 }
 

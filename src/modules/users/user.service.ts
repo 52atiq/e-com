@@ -6,15 +6,14 @@ import userRepository from "./user.repository";
 import User from "./user.model";
 
 class UserService {
-  async createUser(payload: Partial<User>) {
-    const exists = await userRepository.findByEmail(payload.email!);
 
-    if (exists) {
-      throw new ApiError(httpStatus.BAD_REQUEST, "Email already exists");
-    }
-
-    return await userRepository.create(payload as any);
-  }
+  // async createUser(payload: Partial<User>) {
+  //   const exists = await userRepository.findByEmail(payload.email!);
+  //   if (exists) {
+  //     throw new ApiError(httpStatus.BAD_REQUEST, "Email already exists");
+  //   }
+  //   return await userRepository.create(payload as any);
+  // }
 
   async getUsers() {
     return await userRepository.findAll();

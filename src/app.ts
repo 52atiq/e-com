@@ -5,7 +5,7 @@ import helmet from "helmet";
 import router from "./routes";
 import notFound from "./middlewares/notFound.middleware";
 import globalErrorHandler from "./middlewares/globalErrorHandler";
-// import globalErrorHandler from "./middlewares/error.middleware";
+import "./database/associations";
 
 const app = express();
 

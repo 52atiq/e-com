@@ -1,6 +1,6 @@
 import { CreationAttributes } from "sequelize";
 import Role from "./role.model";
-import {  ICreateRole, IRole, IUpdateRole, RoleName } from "./role.types";
+import {  ICreateRole, IUpdateRole, RoleName } from "./role.types";
 
 class RoleRepository {
   async create(payload: ICreateRole) {
@@ -40,6 +40,17 @@ class RoleRepository {
 
     return role;
   }
+
+  // ##########################
+
+
+async findCustomerRole() {
+  return await Role.findOne({
+    where: {
+      name: RoleName.CUSTOMER,
+    },
+  });
+}
 }
 
 export default new RoleRepository();
