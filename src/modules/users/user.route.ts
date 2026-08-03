@@ -9,7 +9,7 @@ import validateRequest from "../../middlewares/validate.middleware";
 
 const router = Router();
 
-router.post("/", validateRequest(createUserValidation), userController.create);
+// router.post("/", validateRequest(createUserValidation), userController.create);
 
 router.get("/", userController.getAll);
 

@@ -15,7 +15,8 @@ import { createToken, verifyToken } from "../../shared/utils/jwt";
 
 class AuthService {
   async register(payload: IRegisterPayload) {
-    const exists = await userRepository.findByEmail(payload.email);
+    // const exists = await userRepository.findByEmail(payload.email);
+    const exists = await userRepository.findByEmailWithPassword(payload.email);
 
     if (exists) {
       throw new ApiError(httpStatus.BAD_REQUEST, "Email already exists");
@@ -79,10 +80,11 @@ class AuthService {
       throw new ApiError(httpStatus.UNAUTHORIZED, "Invalid credentials");
     }
 
+
     const jwtPayload = {
       userId: user.id,
       email: user.email,
-      role: user.roleId,
+      role: user.role?.name,
     };
 
     const accessToken = createToken(

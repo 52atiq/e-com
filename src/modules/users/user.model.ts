@@ -4,16 +4,18 @@ import {
   InferAttributes,
   InferCreationAttributes,
   CreationOptional,
+  NonAttribute,
 } from "sequelize";
 
 import { sequelize } from "../../config/database";
 import { Gender, UserStatus } from "./user.types";
+import Role from "../roles/role.model";
 
 class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare id: CreationOptional<string>;
 
   declare roleId: string;
-
+  declare role?: NonAttribute<Role>;
   declare firstName: string;
 
   declare lastName: string;
@@ -133,6 +135,19 @@ User.init(
     timestamps: true,
     paranoid: true,
     underscored: true,
+    defaultScope: {
+      attributes: {
+        exclude: ["password"],
+      },
+    },
+
+    scopes: {
+      withPassword: {
+        attributes: {
+          include: ["password"],
+        },
+      },
+    },
   },
 );
 

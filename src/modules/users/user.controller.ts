@@ -5,16 +5,16 @@ import catchAsync from "../../shared/utils/catchAsync";
 import sendResponse from "../../shared/utils/sendResponse";
 
 class UserController {
-  create = catchAsync(async (req: Request, res: Response) => {
-    const result = await userService.createUser(req.body);
+  // create = catchAsync(async (req: Request, res: Response) => {
+  //   const result = await userService.createUser(req.body);
 
-    sendResponse(res, {
-      success: true,
-      statusCode: httpStatus.CREATED,
-      message: "User created successfully",
-      data: result,
-    });
-  });
+  //   sendResponse(res, {
+  //     success: true,
+  //     statusCode: httpStatus.CREATED,
+  //     message: "User created successfully",
+  //     data: result,
+  //   });
+  // });
 
   getAll = catchAsync(async (_req: Request, res: Response) => {
     const result = await userService.getUsers();
